@@ -1,0 +1,440 @@
+<!doctype html>
+<html class="no-js" lang=""  ng-app="comparadorApp">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Telefónica: Comparador de precios</title>
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+  </head>
+  <body ng-controller="PhoneListCtrl">
+    <!--[if IE]>
+      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+      <!---->
+      <!-- COMIENZO DE CODIGO A COPIAR EN TELEFONICA -->
+      <!---->
+
+    
+
+    <link rel="stylesheet" href="styles/main.css">
+    
+    <script src="scripts/vendor/modernizr.js"></script>
+    
+    <div class="fluid-container">
+
+    <!---->
+
+    <br>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default panel-texto">
+                <div class="panel-body">
+                    <p>
+                        A continuación presentamos los equipos que movistar tiene 
+                        para ti. Para conocer el detalle de cada modelo haz clic 
+                        sobre el de tu preferencia.
+                    </p>
+                    <p>
+                        Estos precios aplican sólo para los equipos a la venta en los 
+                        <a href="http://www.movistar.com.ve/particulares/ayuda/centros_serv.asp">Centros de Servicio</a>. 
+                        Movistar no es responsable de los precios de los equipos establecidos en los Agentes Autorizados.
+                    </p>
+                    <p>
+                        Si quieres conocer la disponibilidad de los equipos en 
+                        nuestros Centros de Servicio, por marca y modelo, ingresa al 
+                        <a href="http://www.movistar.com.ve/particulares/ayuda/inventario/inventario_x_equipos.asp">Inventario de equipos.</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 cellphonesList" ng-if="showComparador">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="col-sm-12 text-right">
+                        <button ng-click="closeComparador()" class="btn btn-default">X</button>
+                    </div>
+                    
+                    <div class="col-md-3" ng-repeat="cellphone in cellphonesToCompare">
+                        <div class="panel panel-primary">
+                            <div class="panel-body" style="padding-bottom:0">
+                                <div class="row">
+                                    <div class="col-xs-12 text-center" style="margin-bottom:20px;">
+                                        <img ng-src="{{getCellphoneImage(cellphone)}}" alt="">
+                                        <p style="margin:10px">
+                                            <div class="cellphone-marca">{{cellphone.marca}}</div>
+                                            <div class="cellphone-nombre">{{cellphone.nombre}}</div>
+                                            <span class="glyphicon glyphicon-star" ng-if="cellphone.destacado" aria-hidden="true"></span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row ">
+                                    <ul class="list-group" style="margin-bottom:0">
+                                        <li class="list-group-item">
+                                            <strong>Marca:</strong> {{ cellphone.marca }}
+                                        </li>
+                                        <li class="list-group-item">
+                                            <strong>PMVP Bs:</strong> {{ getPrecio(cellphone) }}
+                                        </li>
+                                        <li class="list-group-item">
+                                            <strong>IVA Bs:</strong> {{ getIVA(cellphone)}}
+                                        </li>
+                                        <li class="list-group-item">
+                                            <strong>PMVP+IVA Bfs:</strong> {{ getTotalPrice(cellphone)}}
+                                        </li>
+                                        <li class="list-group-item">
+                                            <strong>Actualizado el: </strong> 27/03/2017
+                                        </li>
+                                        <li class="list-group-item">
+                                            <strong>Tecnología: </strong> {{ cellphone.tecnologia }}
+                                        </li>
+                                        <li class="list-group-item">
+                                            <strong>Frecuencias: </strong> {{ cellphone.frecuencias }}
+                                        </li>
+                                        <li class="list-group-item">
+                                            <strong>Redes de datos: </strong> {{ cellphone.redes }}
+                                        </li>
+                                        <li class="list-group-item">
+                                            <strong>Antena: </strong> {{ cellphone.antena }}
+                                        </li>
+                                        <li class="list-group-item">
+                                            <strong>Diseño: </strong> {{ cellphone.diseno }}
+                                        </li>
+                                        <li class="list-group-item">
+                                            <strong>Otras funciones: </strong> {{ cellphone.otras }}
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="!showComparador">
+            <div class="col-sm-3">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Búsqueda avanzada</div>
+
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <h4>Mostrar</h4>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="radio">
+                                        <label>
+                                        <input type="radio" ng-model="destacadoChoices" 
+                                            value="0" ng-checked="destacadoChoices == 0"
+                                            ng-change="changeDestacados(0)">
+                                        Todos
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="radio">
+                                        <label>
+                                        <input type="radio" ng-model="destacadoChoices" 
+                                            value="1" ng-checked="destacadoChoices > 0"
+                                            ng-change="changeDestacados(1)">
+                                        Destacados
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <h4>Rango de precios</h4>
+
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon3">Desde</span>
+                                <input type="number" min={{minPrecio}} max={{hastaPrecio}} 
+                                    name="desdePrecio" class="form-control"  
+                                    ng-model="desdePrecio" ng-change="updateModel('desdePrecio', desdePrecio)">
+                            </div>
+                            <div class="text-right">
+                                <small><strong>Menor precio:</strong> {{minPrecio}} </small>
+                            </div>
+
+                            <br>
+
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon3">Hasta</span>
+                                <input type="number" min={{desdePrecio}} max={{maxPrecio}} 
+                                    name="hastaPrecio" class="form-control" 
+                                    ng-model="hastaPrecio" ng-change="updateModel('hastaPrecio', hastaPrecio)">
+                            </div>
+                            <div class="text-right">
+                                <small><strong>Mayor precio:</strong> {{maxPrecio}} </small>
+                            </div>
+                            
+                        </li>
+                        <li class="list-group-item">
+                            <h4>Puntos Movistar</h4>
+
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon3">Desde</span>
+                                <input type="number" min={{minPuntos}} max={{hastaPuntos}} 
+                                    name="desdePuntos" class="form-control"  
+                                    ng-model="desdePuntos" ng-change="updateModel('desdePuntos', desdePuntos)">
+
+                            </div>
+                            <div class="text-right">
+                                <small><strong>Menor cantidad:</strong> {{minPuntos}} </small>
+                            </div>
+
+                            <br>
+
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon3">Hasta</span>
+                                <input type="number" min={{desdePuntos}} max={{maxPuntos}} 
+                                    name="hastaPuntos" class="form-control" 
+                                    ng-model="hastaPuntos" ng-change="updateModel('hastaPuntos', hastaPuntos)">
+                            </div>
+                            <div class="text-right">
+                                <small><strong>Mayor cantidad:</strong> {{maxPuntos}} </small>
+                            </div>
+                            
+                        </li>
+                        <li class="list-group-item">
+                            <h4>Marca</h4>
+
+                            <div class="row">
+                                <div class="col-md-6" ng-repeat="marca in marcas">
+                                    <div class="checkbox">
+                                    <label>
+                                        <input
+                                        type="checkbox"
+                                        name="selectedMarcas[]"
+                                        value="{{marca}}"
+                                        ng-checked="isSelected('marca', marca)"
+                                        ng-click="toggleSelection('marca', marca)"
+                                        > {{marca}}
+                                    </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <h4>Tecnología</h4>
+                            <div class="row">
+                                <div class="col-md-6" ng-repeat="tecnologia in tecnologias">
+                                    <div class="checkbox">
+                                    <label>
+                                        <input
+                                        type="checkbox"
+                                        name="selectedTecnologias[]"
+                                        value="{{tecnologia}}"
+                                        ng-checked="isSelected('tecnologia', tecnologia)"
+                                        ng-click="toggleSelection('tecnologia', tecnologia)"
+                                        > {{tecnologia}}
+                                    </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <h4>Frecuencia</h4>
+                            
+                            <div class="row">
+                                <div class="col-md-6" ng-repeat="frecuencia in frecuencias">
+                                    <div class="checkbox">
+                                    <label>
+                                        <input
+                                        type="checkbox"
+                                        name="selectedFrecuencias[]"
+                                        value="{{frecuencia}}"
+                                        ng-checked="isSelected('frecuencia', frecuencia)"
+                                        ng-click="toggleSelection('frecuencia', frecuencia)"
+                                        > {{frecuencia}}
+                                    </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <h4>Redes de datos</h4>
+
+                            <div class="row">
+                                <div class="col-md-6" ng-repeat="red in redes">
+                                    <div class="checkbox">
+                                    <label>
+                                        <input
+                                        type="checkbox"
+                                        name="selectedRedes[]"
+                                        value="{{red}}"
+                                        ng-checked="isSelected('rede', red)"
+                                        ng-click="toggleSelection('rede', red)"
+                                        > {{red}}
+                                    </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <h4>Antena</h4>
+                            <div class="row">
+                                <div class="col-md-6" ng-repeat="antena in antenas">
+                                    <div class="checkbox">
+                                    <label>
+                                        <input
+                                        type="checkbox"
+                                        name="selectedAntenas[]"
+                                        value="{{antena}}"
+                                        ng-checked="isSelected('antena', antena)"
+                                        ng-click="toggleSelection('antena', antena)"
+                                        > {{antena}}
+                                    </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <h4>Diseño</h4>
+
+                            <div class="row">
+                                <div class="col-md-6" ng-repeat="diseno in disenos">
+                                    <div class="checkbox">
+                                    <label>
+                                        <input
+                                        type="checkbox"
+                                        name="selectedDisenos[]"
+                                        value="{{diseno}}"
+                                        ng-checked="isSelected('diseno', diseno)"
+                                        ng-click="toggleSelection('diseno', diseno)"
+                                        > {{diseno}}
+                                    </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <h4>Otras funciones</h4>
+
+                            <div class="row">
+                                <div class="col-md-6" ng-repeat="otra in otras">
+                                    <div class="checkbox">
+                                    <label>
+                                        <input
+                                        type="checkbox"
+                                        name="selectedOtras[]"
+                                        value="{{otras}}"
+                                        ng-checked="isSelected('otra', otra)"
+                                        ng-click="toggleSelection('otra', otra)"
+                                        > {{otra}}
+                                    </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-9 cellphonesList" >
+                <div class="row " style="margin-bottom:20px">
+                    <div class="col-md-6">
+                        <h2>Mostrando {{cellphonesFiltered.length}} equipos</h2>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <button ng-click="goAndCompare()" class="btn btn-primary" ng-disabled="selectedCellphones.length <= 1 ">Comparar equipos</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="alert alert-warning" ng-show="selectedCellphones.length === 4">
+                        Solo puede seleccionar un máximo de cuatro equipos
+                    </div>
+                    <div class="col-md-4 col-xs-6" ng-repeat="cellphone in cellphonesFiltered">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="checkbox">
+                                    <label>
+                                        <input 
+                                        type="checkbox" 
+                                        name="selectedCellphones[]" 
+                                        value="{{cellphone.id_telefono}}"
+                                        ng-checked="isSelected('cellphone', cellphone.id_telefono)"
+                                        ng-click="toggleSelection('cellphone', cellphone.id_telefono)"
+                                        id="optionsRadios1"  
+                                        ng-disabled="selectedCellphones.length === 4 && !isSelected('cellphone', cellphone.id_telefono)"                                   
+                                        > Seleccionar
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="panel-body" style="padding-bottom:0">
+                                <div class="row cellphone-info">
+                                    <div class="col-xs-3 text-center">
+                                        <img ng-src="{{getCellphoneImage(cellphone)}}" alt="">
+                                        <span class="glyphicon glyphicon-star" ng-if="cellphone.destacado" aria-hidden="true"></span>                                        
+                                    </div>
+                                    <div class="col-xs-9 ">
+                                        <div class="cellphone-marca">{{cellphone.marca}}</div>
+                                        <div class="cellphone-nombre">{{cellphone.nombre}}</div>
+                                        <div class="cellphone-precio">
+                                            Bs. {{ getTotalPrice(cellphone)}}
+                                            <small>(PMVP+IVA)</small> 
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="row ">
+                                    <ul class="list-group" style="margin-bottom:0">
+                                        <li class="list-group-item">
+                                            <strong>PMVP Bs:</strong> {{ getPrecio(cellphone) }}
+                                        </li>
+                                        <li class="list-group-item">
+                                            <strong>IVA Bs:</strong> {{ getIVA(cellphone)}}
+                                        </li>
+                                        <li class="list-group-item">
+                                            <strong>PMVP+IVA Bs:</strong> {{ getTotalPrice(cellphone)}}
+                                        </li>
+                                        <li class="list-group-item">
+                                            <strong>Actualizado el: </strong> 18/05/2017
+                                        </li>
+                                        <li class="list-group-item">
+                                            <strong>Club Movistar Pts: </strong> {{ cellphone.club_movistar }}
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <!---->
+    </div>
+    
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <script>
+      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+      e.src='https://www.google-analytics.com/analytics.js';
+      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+      ga('create','UA-XXXXX-X');ga('send','pageview');
+    </script>
+
+    <script src="scripts/vendor.js"></script>
+    
+    <script src="scripts/plugins.js"></script>
+    
+    <script src="scripts/main.js"></script>
+
+      <!---->
+      <!-- FIN DE CODIGO A COPIAR EN TELEFONICA -->
+      <!---->
+
+  </body>
+</html>
