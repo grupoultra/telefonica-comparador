@@ -60,11 +60,13 @@
                     <div class="col-sm-12 text-right">
                         <button ng-click="closeComparador()" class="btn btn-default">X</button>
                     </div>
-                    
-                    <div class="col-md-3" ng-repeat="cellphone in cellphonesToCompare">
-                        <div class="panel panel-primary">
-                            <div class="panel-body" style="padding-bottom:0">
-                                <div class="row">
+
+
+                    <table class="table table-bordered">
+                        <thead class="cellphone-info">
+                            <tr>
+                                <th></th>
+                                <th class="bg-primary" ng-repeat="cellphone in cellphonesToCompare">
                                     <div class="col-xs-12 text-center" style="margin-bottom:20px;">
                                         <img ng-src="{{getCellphoneImage(cellphone)}}" alt="">
                                         <p style="margin:10px">
@@ -73,48 +75,78 @@
                                             <span class="glyphicon glyphicon-star" ng-if="cellphone.destacado" aria-hidden="true"></span>
                                         </p>
                                     </div>
-                                </div>
-                                <div class="row ">
-                                    <ul class="list-group" style="margin-bottom:0">
-                                        <li class="list-group-item">
-                                            <strong>Marca:</strong> {{ cellphone.marca }}
-                                        </li>
-                                        <li class="list-group-item">
-                                            <strong>PMVP Bs:</strong> {{ getPrecio(cellphone) }}
-                                        </li>
-                                        <li class="list-group-item">
-                                            <strong>IVA Bs:</strong> {{ getIVA(cellphone)}}
-                                        </li>
-                                        <li class="list-group-item">
-                                            <strong>PMVP+IVA Bfs:</strong> {{ getTotalPrice(cellphone)}}
-                                        </li>
-                                        <li class="list-group-item">
-                                            <strong>Actualizado el: </strong> 27/03/2017
-                                        </li>
-                                        <li class="list-group-item">
-                                            <strong>Tecnología: </strong> {{ cellphone.tecnologia }}
-                                        </li>
-                                        <li class="list-group-item">
-                                            <strong>Frecuencias: </strong> {{ cellphone.frecuencias }}
-                                        </li>
-                                        <li class="list-group-item">
-                                            <strong>Redes de datos: </strong> {{ cellphone.redes }}
-                                        </li>
-                                        <li class="list-group-item">
-                                            <strong>Antena: </strong> {{ cellphone.antena }}
-                                        </li>
-                                        <li class="list-group-item">
-                                            <strong>Diseño: </strong> {{ cellphone.diseno }}
-                                        </li>
-                                        <li class="list-group-item">
-                                            <strong>Otras funciones: </strong> {{ cellphone.otras }}
-                                        </li>
-                                    </ul>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="text-center">
+                                <td class="bg-info"><strong>Marca</strong></td>
+                                <td ng-repeat="cellphone in cellphonesToCompare">
+                                    {{ cellphone.marca }}
+                                </td>
+                            </tr>
+                            <tr class="text-center">
+                                <td class="bg-info"><strong>PMVP Bs</strong></td>
+                                <td ng-repeat="cellphone in cellphonesToCompare">
+                                    {{ getPrecio(cellphone) }}
+                                </td>
+                            </tr>
+                            <tr class="text-center">
+                                <td class="bg-info"><strong>IVA Bs:</strong></td>
+                                <td ng-repeat="cellphone in cellphonesToCompare">
+                                    {{ getIVA(cellphone)}}
+                                </td>
+                            </tr>
+                            <tr class="text-center">
+                                <td class="bg-info"><strong>PMVP+IVA Bfs:</strong></td>
+                                <td ng-repeat="cellphone in cellphonesToCompare">
+                                    {{ getTotalPrice(cellphone)}}
+                                </td>
+                            </tr>
+                            <tr class="text-center">
+                                <td class="bg-info"><strong>Actualizado el:</strong></td>
+                                <td ng-repeat="cellphone in cellphonesToCompare">
+                                    18/05/2017
+                                </td>
+                            </tr>
+                            <tr class="text-center">
+                                <td class="bg-info"><strong>Tecnología</strong></td>
+                                <td ng-repeat="cellphone in cellphonesToCompare">
+                                    {{ cellphone.tecnologia }}
+                                </td>
+                            </tr>
+                            <tr class="text-center">
+                                <td class="bg-info"><strong>Frecuencias</strong></td>
+                                <td ng-repeat="cellphone in cellphonesToCompare">
+                                    {{ cellphone.frecuencias }}
+                                </td>
+                            </tr>
+                            <tr class="text-center">
+                                <td class="bg-info"><strong>Redes de datos</strong></td>
+                                <td ng-repeat="cellphone in cellphonesToCompare">
+                                    {{ cellphone.redes }}
+                                </td>
+                            </tr>
+                            <tr class="text-center">
+                                <td class="bg-info"><strong>Antena</strong></td>
+                                <td ng-repeat="cellphone in cellphonesToCompare">
+                                    {{ cellphone.antena }}
+                                </td>
+                            </tr>
+                            <tr class="text-center">
+                                <td class="bg-info"><strong>Diseño</strong></td>
+                                <td ng-repeat="cellphone in cellphonesToCompare">
+                                    {{ cellphone.diseno }}
+                                </td>
+                            </tr>
+                            <tr class="text-center">
+                                <td class="bg-info"><strong>Otras funciones</strong></td>
+                                <td ng-repeat="cellphone in cellphonesToCompare">
+                                    {{ cellphone.otras }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
